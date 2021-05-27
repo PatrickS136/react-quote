@@ -8,14 +8,16 @@ const QuoteBox=(props)=>{
 
     useEffect(()=>{
         const fetchQuote=async()=>{
-        const response=await fetch("https://goquotes-api.herokuapp.com/api/v1/random?count=1")
-        if (!response.ok){
-            console.log("Error in fetching quote")
-        }
-            const data=await response.json()
-            setQuote(data["quotes"][0]["text"])
-            setAuthor(data["quotes"][0]["author"])
-            console.log("Fetch")
+            fetch("https://type.fit/api/quotes")
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                console.log(data);
+                const newQuoteIndex=Math.floor(Math.random()*data.length)
+                setQuote(data[newQuoteIndex]["text"])
+                setAuthor(data[newQuoteIndex]["author"])
+            });
         }
 
         fetchQuote();
